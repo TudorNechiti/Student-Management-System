@@ -1,0 +1,10 @@
+server:
+  servlet:
+    context-path: /api
+
+app:
+  datasource:
+    jdbc-url: "jdbc:postgresql://localhost:5431/school"
+    username: "postgres"
+    password: "Eutusiel2022"
+    maximum-pool-size: 30
