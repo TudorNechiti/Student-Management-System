@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import Container from './Container';
+import Footer from './Footer';
 import './App.css';
 import { getAllStudents } from './client';
-import { Table, Avatar, Spin } from 'antd';
+import { Table, Avatar, Spin, Modal } from 'antd';
 
 function App() {
   const [students, setStudents] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [modalVisibility, setModalVisibility] = useState(false);
 
   useEffect(() => {
     fetchStudents();
@@ -29,6 +31,10 @@ function App() {
         console.error("Error in fetching students", error);
       })
   }
+
+  const openAddStudentModal = () => setModalVisibility(true);
+
+  const closeAddStudentModal = () => setModalVisibility(false);
 
   const columns = [
     {
@@ -82,6 +88,18 @@ function App() {
           pagination={false}
           rowKey="id"
           style={{ marginBottom: '1em' }}
+        />
+        <Modal 
+          title='Add new student'
+          visible={modalVisibility}
+          onOk={closeAddStudentModal}
+          onCancel={closeAddStudentModal}
+          width={500}
+          
+        />
+        <Footer 
+          numberOfStudents={students.length}
+          handleAddStudentClickEvent={openAddStudentModal}
         />
         </Container>
       ) : (
