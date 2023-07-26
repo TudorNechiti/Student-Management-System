@@ -1,25 +1,37 @@
 package com.tuds.sss.student;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 import java.util.UUID;
 
 public class Student {
 
-    private final UUID id;
+    private final UUID studentID;
     private final String firstName;
     private final String lastName;
     private final String email;
     private final Gender gender;
 
-    public Student(UUID id, String firstName, String lastName, String email, Gender gender) {
-        this.id = id;
+    enum Gender {
+        MALE,
+        FEMALE
+    }
+
+    public Student(@JsonProperty("studentID") UUID id,
+                   @JsonProperty("firstName") String firstName,
+                   @JsonProperty("lastName") String lastName,
+                   @JsonProperty("email") String email,
+                   @JsonProperty("gender") Gender gender) {
+        this.studentID = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getStudentID() {
+        return studentID;
     }
 
     public String getFirstName() {
@@ -38,7 +50,14 @@ public class Student {
         return gender;
     }
 
-    enum Gender {
-        MALE, FEMALE
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentID=" + studentID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", gender=" + gender +
+                '}';
     }
 }

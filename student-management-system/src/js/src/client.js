@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/api'
-  });
+  baseURL: 'http://localhost:8080/api'
+});
 
-  export const getAllStudents = () => instance.get('/students');
+export const getAllStudents = () => instance.get('/students');
+
+export const addNewStudent = student => instance.post('/students', student);

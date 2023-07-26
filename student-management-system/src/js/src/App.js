@@ -5,6 +5,8 @@ import Footer from './Footer';
 import './App.css';
 import { getAllStudents } from './client';
 import { Table, Avatar, Spin, Modal } from 'antd';
+import AddStudentForm from './Forms/AddStudentForm';
+import { errorNotification } from './Notification';
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -94,9 +96,21 @@ function App() {
           visible={modalVisibility}
           onOk={closeAddStudentModal}
           onCancel={closeAddStudentModal}
-          width={500}
-          
-        />
+          width={500}>
+          <h2>Please create a new student to be added</h2>
+          <hr></hr>
+          <AddStudentForm
+            onSuccess={() => {
+              closeAddStudentModal();
+              fetchStudents();
+            }}
+            onFailure={(error) => {
+              console.log(JSON.stringify(error));
+              errorNotification('Error', "Cannot complete action");
+            }}>
+          </AddStudentForm>
+        </Modal>
+        
         <Footer 
           numberOfStudents={students.length}
           handleAddStudentClickEvent={openAddStudentModal}
