@@ -50,4 +50,16 @@ public class StudentRepository {
                 student.getEmail(),
                 student.getGender().name().toUpperCase());
     }
+
+    @SuppressWarnings("ConstantConditions")
+    public boolean isEmailTaken(String email){
+        String sql = "" +
+                "SELECT EXISTS(" +
+                "SELECT 1 " +
+                "FROM students " +
+                "WHERE email = ?)";
+
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, (resultSet, i) -> resultSet.getBoolean(1), email));
+    }
+
 }

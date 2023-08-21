@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import Container from './Container';
 import Footer from './Footer';
-import './App.css';
+import './css/App.css'
 import './Forms/CustomStyles.css';
 import { getAllStudents } from './client';
-import { Table, Avatar, Spin, Modal } from 'antd';
-import AddStudentForm from './Forms/AddStudentForm';
+import {Avatar, Spin, Empty } from 'antd';
 import { errorNotification } from './Notification';
+import StudentTable from './StudentTable';
+import AddStudentModal from './AddStudentModal';
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -31,8 +32,13 @@ function App() {
       })
       .catch(error => {
         setIsFetching(false);
+        if (error.error && error.error.message) {
+          errorNotification("Error in fetching students", error.error.message);
+        } else {
+          errorNotification("Error in fetching students", "An error occurred.");
+        }
         console.error("Error in fetching students", error);
-      })
+      });
   }
 
   const openAddStudentModal = () => setModalVisibility(true);
@@ -80,45 +86,40 @@ function App() {
   return (
     <div className="App">
       {isFetching ? (
-         <Container>
-         <Spin indicator={getSpinIcon()}></Spin>
-       </Container>
+        <Container>
+          <Spin indicator={getSpinIcon()}></Spin>
+        </Container>
       ) : students.length > 0 ? (
         <Container>
-        <Table
-          dataSource={students}
-          columns={columns}
-          pagination={false}
-          rowKey="studentID"
-          style={{ marginBottom: '1em' }}
-        />
-        <Modal 
-          className='custom-modal'
-          open={modalVisibility}
-          onOk={closeAddStudentModal}
-          onCancel={closeAddStudentModal}
-          width={500}>
-          <h2>New student</h2>
-          <hr></hr>
-          <AddStudentForm
+          <StudentTable
+            students={students}
+            columns={columns}
+          />
+          <AddStudentModal
+            open={modalVisibility}
+            onClose={closeAddStudentModal}
             onSuccess={() => {
               closeAddStudentModal();
               fetchStudents();
             }}
             onFailure={(error) => {
               console.log(JSON.stringify(error));
-              errorNotification('Error', "Cannot complete action");
-            }}>
-          </AddStudentForm>
-        </Modal>
-        
-        <Footer 
-          numberOfStudents={students.length}
-          handleAddStudentClickEvent={openAddStudentModal}
-        />
+              errorNotification('Error', 'Cannot fetch students.');
+            }}  
+          />
+          <Footer
+            numberOfStudents={students.length}
+            handleAddStudentClickEvent={openAddStudentModal}
+          />
         </Container>
       ) : (
-        <h1>No students found</h1>
+        <Container>
+        <Empty 
+          description={
+            <h1>No students found</h1>
+        }>
+        </Empty>
+        </Container>
       )}
     </div>
   );

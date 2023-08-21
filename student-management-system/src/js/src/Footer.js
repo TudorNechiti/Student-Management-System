@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from './Container';
 import { Button, Avatar } from 'antd';
-import './Footer.css';
+import './css/Footer.css';
 
 const Footer = props => (
     <div className='footer'>
