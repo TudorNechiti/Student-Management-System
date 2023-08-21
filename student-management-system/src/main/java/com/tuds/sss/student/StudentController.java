@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -19,6 +20,11 @@ public class StudentController {
     @GetMapping
     public List<Student> getAllStudents()  {
       return studentService.getAllStudents();
+    }
+
+    @GetMapping(path = "{studentID}/courses")
+    public List<StudentCourse> getAllCoursesForStudent(@PathVariable("studentID") UUID studentID){
+        return studentService.getAllCoursesForStudent(studentID);
     }
 
     @PostMapping

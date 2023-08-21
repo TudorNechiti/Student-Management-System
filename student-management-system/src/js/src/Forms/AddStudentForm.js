@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
 
 const error = props => { return <div className='error'>{props.children}</div> };
 
-const AddStudentForm = props =>
+const AddStudentForm = (props) =>
         (
             <Formik
                 initialValues={initialValues}

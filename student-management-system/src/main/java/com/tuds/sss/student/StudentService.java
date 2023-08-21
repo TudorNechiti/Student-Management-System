@@ -39,4 +39,9 @@ public class StudentService {
 
         studentRepository.insertStudent(newStudentID, student);
     }
+
+
+    public List<StudentCourse> getAllCoursesForStudent(UUID studentID) {
+        return studentRepository.selectAllCoursesForStudent(studentID);
+    }
 }
