@@ -45,6 +45,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-maven-plugin</artifactId>
+			<version>9.20.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -52,6 +60,23 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>9.20.0</version> <!-- Use the appropriate version -->
+				<configuration>
+					<url>jdbc:postgresql://localhost:5431/school</url>
+					<user>postgres</user>
+					<password>Eutusiel2022</password>
+					<schemas>public</schemas> <!-- Assuming the schema is 'public' -->
+					<locations>
+						<location>classpath:db/migration</location>
+					</locations>
+					<outOfOrder>true</outOfOrder>
+
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

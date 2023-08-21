@@ -3,6 +3,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import Container from './Container';
 import Footer from './Footer';
 import './App.css';
+import './Forms/CustomStyles.css';
 import { getAllStudents } from './client';
 import { Table, Avatar, Spin, Modal } from 'antd';
 import AddStudentForm from './Forms/AddStudentForm';
@@ -51,7 +52,7 @@ function App() {
     },
     {
       title: "Student ID",
-      dataIndex: "id",
+      dataIndex: "studentID",
       key: "id",
     },
     {
@@ -88,16 +89,16 @@ function App() {
           dataSource={students}
           columns={columns}
           pagination={false}
-          rowKey="id"
+          rowKey="studentID"
           style={{ marginBottom: '1em' }}
         />
         <Modal 
-          title='Add new student'
-          visible={modalVisibility}
+          className='custom-modal'
+          open={modalVisibility}
           onOk={closeAddStudentModal}
           onCancel={closeAddStudentModal}
           width={500}>
-          <h2>Please create a new student to be added</h2>
+          <h2>New student</h2>
           <hr></hr>
           <AddStudentForm
             onSuccess={() => {

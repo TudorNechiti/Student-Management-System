@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Button } from 'antd';
 import * as Yup from 'yup';
 import './Error.css';
+import './CustomStyles.css';
 import { addNewStudent } from '../client';
 
 const initialValues = {
@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email format').required('*Required'),
 });
 
-const error = props => {return <div className='error'>{props.children}</div>};
+const error = props => { return <div className='error'>{props.children}</div> };
 
 const AddStudentForm = props =>
         (
@@ -44,14 +44,16 @@ const AddStudentForm = props =>
                         <div className='form-control'>
                             <label htmlFor='firstName' style={{ marginTop: '1em' }}>First Name</label>
                             <Field
-                                name='firstName'>
+                                name='firstName'
+                                className='field'>
                             </Field>
                             <ErrorMessage name='firstName' component={error}></ErrorMessage>
                         </div>
                         <div className='form-control'>
                             <label htmlFor='lastName'>Last Name</label>
                             <Field
-                                name='lastName'>
+                                name='lastName'
+                                className='field'>
                             </Field>
                             <ErrorMessage name='lastName' component={error}></ErrorMessage>
                         </div>
@@ -60,6 +62,7 @@ const AddStudentForm = props =>
                             <Field
                                 type='email'
                                 name='email'
+                                className='field'
                                 placeholder='johndoe@gmail.com'>
                             </Field>
                             <ErrorMessage name='email' component={error}></ErrorMessage>
@@ -68,18 +71,20 @@ const AddStudentForm = props =>
                             <label htmlFor='gender'>Select gender</label>
                             <Field
                                 component='select'
-                                name='gender'>
+                                name='gender'
+                                className='field'>
                                     <option value='MALE'>Male</option>
                                     <option value='FEMALE'>Female</option>
                             </Field>
                         </div>
-                        <Button
+                        <button
                             type='submit'
+                            className='submit-button'
                             disabled={isSubmitting || (touched && !isValid)}
                             style={{ marginTop: '2em' }}
                             onClick={() => submitForm()}>
                             Submit
-                        </Button>
+                        </button>
                     </Form>
                 )}
             </Formik>

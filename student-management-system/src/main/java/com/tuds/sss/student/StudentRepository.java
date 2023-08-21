@@ -34,7 +34,6 @@ public class StudentRepository {
             String lastName = resultSet.getString("last_name");
             String email = resultSet.getString("email");
             Student.Gender gender = Student.Gender.valueOf(resultSet.getString("gender").toUpperCase());
-            System.out.println(studentID);
             return new Student(studentID, firstName, lastName, email, gender);
         };
     }

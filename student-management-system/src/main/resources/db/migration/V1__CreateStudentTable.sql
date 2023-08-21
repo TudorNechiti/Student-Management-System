@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS students (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     gender VARCHAR(6) NOT NULL
-        CHECK (gender = 'MALE' OR gender = 'FEMALE' OR
-               gender = 'male' OR GENDER = 'female')
+    CHECK (gender = 'MALE' OR gender = 'FEMALE' OR
+    gender = 'male' OR GENDER = 'female')
 );
