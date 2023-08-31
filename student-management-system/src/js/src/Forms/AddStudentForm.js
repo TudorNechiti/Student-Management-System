@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './Error.css';
 import './CustomStyles.css';
-import { addNewStudent } from '../client';
+import { addNewStudent } from '../js/client';
 
 const initialValues = {
     firstName: '',

@@ -89,4 +89,18 @@ public class StudentRepository {
                         Optional.ofNullable(resultSet.getString("grade")).map(Integer::parseInt).orElse(null)
                 );
     }
+
+    public void deleteStudentInstance(UUID studentID) {
+        // First, delete student_course records for the student
+        String deleteStudentCoursesSQL = "" +
+                "DELETE FROM student_course " +
+                "WHERE student_id = ?";
+        jdbcTemplate.update(deleteStudentCoursesSQL, studentID);
+
+        // Then, delete the student from students table
+        String deleteStudentSQL = "" +
+                "DELETE FROM students " +
+                "WHERE student_id = ?";
+        jdbcTemplate.update(deleteStudentSQL, studentID);
+    }
 }

@@ -19,7 +19,7 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getAllStudents()  {
-      return studentService.getAllStudents();
+        return studentService.getAllStudents();
     }
 
     @GetMapping(path = "{studentID}/courses")
@@ -30,5 +30,10 @@ public class StudentController {
     @PostMapping
     public void addNewStudent(@RequestBody Student student){
         studentService.addNewStudent(student);
+    }
+
+    @DeleteMapping(path = "/{studentID}")
+    public void deleteStudent(@PathVariable("studentID") UUID studentID){
+        studentService.deleteStudent(studentID);
     }
 }

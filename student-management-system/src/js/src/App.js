@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
-import Container from './Container';
-import Footer from './Footer';
+import Container from './js/Container';
+import Footer from './js/Footer';
 import './css/App.css'
 import './Forms/CustomStyles.css';
-import { getAllStudents } from './client';
+import { getAllStudents } from './js/client';
 import {Avatar, Spin, Empty } from 'antd';
-import { errorNotification } from './Notification';
-import StudentTable from './StudentTable';
-import AddStudentModal from './AddStudentModal';
+import { errorNotification } from './js/Notification';
+import StudentTable from './js/StudentTable';
+import AddStudentModal from './js/AddStudentModal';
+import { DeleteOutlined } from '@ant-design/icons';
+import { deleteStudent } from './js/client'; 
+
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -80,6 +83,29 @@ function App() {
       title: "Gender",
       dataIndex: "gender",
       key: "gender"
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, student) => (
+        <DeleteOutlined
+          style={{ color: 'red', cursor: 'pointer', fontSize: '18px', marginLeft:'10px'}}
+          onClick={() => {
+            console.log('Student to be deleted:', student); // Display student info in console
+
+            deleteStudent(student.studentID)
+              .then(() => {
+                const updatedStudents = students.filter(
+                  (s) => s.studentID !== student.studentID
+                );
+                setStudents(updatedStudents);
+              })
+              .catch(() => {
+                errorNotification('Error', 'Failed to delete student');
+              });
+          }}
+        />
+      ),
     }
   ];
 

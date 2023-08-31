@@ -25,7 +25,7 @@ public class StudentService {
     }
 
     public void addNewStudent(Student student) {
-       addNewStudent(null, student);
+        addNewStudent(null, student);
     }
 
     public void addNewStudent(UUID studentID, Student student) {
@@ -43,5 +43,9 @@ public class StudentService {
 
     public List<StudentCourse> getAllCoursesForStudent(UUID studentID) {
         return studentRepository.selectAllCoursesForStudent(studentID);
+    }
+
+    public void deleteStudent(UUID studentID) {
+        studentRepository.deleteStudentInstance(studentID);
     }
 }
