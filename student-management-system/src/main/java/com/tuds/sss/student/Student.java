@@ -13,7 +13,7 @@ public class Student {
     private final String email;
     private final Gender gender;
 
-    enum Gender {
+    public enum Gender {
         MALE,
         FEMALE
     }

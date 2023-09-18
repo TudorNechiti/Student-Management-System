@@ -16,9 +16,19 @@ const checkStatus = response => {
 };
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080/api'
+  baseURL: 'http://localhost:8080'
 });
 
 export const getAllStudents = () => instance.get('/students').then(checkStatus);
 
 export const addNewStudent = student => instance.post('/students', student);
+
+export const deleteStudent = (studentID) => {
+  return instance
+    .delete(`/students/${studentID}`)
+    .then(checkStatus)
+    .catch(error => {
+      console.error('Error deleting student:', error);
+      throw new Error('Failed to delete student');
+    });
+};

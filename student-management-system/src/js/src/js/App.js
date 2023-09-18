@@ -3,12 +3,14 @@ import { LoadingOutlined } from '@ant-design/icons';
 import Container from './Container';
 import Footer from './Footer';
 import '../css/App.css'
-import '../Forms/CustomStyles.css';
 import { getAllStudents } from './client';
 import {Avatar, Spin, Empty } from 'antd';
 import { errorNotification } from './Notification';
 import StudentTable from './StudentTable';
 import AddStudentModal from './AddStudentModal';
+import { DeleteOutlined } from '@ant-design/icons';
+import { deleteStudent } from './client'; 
+
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -33,9 +35,9 @@ function App() {
       .catch(error => {
         setIsFetching(false);
         if (error.error && error.error.message) {
-          errorNotification("Error in fetching students", error.error.message);
+          errorNotification("Error", error.error.message);
         } else {
-          errorNotification("Error in fetching students", "An error occurred.");
+          errorNotification("Error", "An error occurred.");
         }
         console.error("Error in fetching students", error);
       });
@@ -49,7 +51,7 @@ function App() {
     {
       title: "",
       key: "avatar",
-      render: (text, student) => (
+      render: (_text, student) => (
         <Avatar size='large'>
           {`${student.firstName.charAt(0).toUpperCase()}
             ${student.lastName.charAt(0).toUpperCase()}`}
@@ -80,6 +82,29 @@ function App() {
       title: "Gender",
       dataIndex: "gender",
       key: "gender"
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, student) => (
+        <DeleteOutlined
+          style={{ color: 'red', cursor: 'pointer', fontSize: '18px', marginLeft:'10px'}}
+          onClick={() => {
+            console.log('Student to be deleted:', student); 
+
+            deleteStudent(student.studentID)
+              .then(() => {
+                const updatedStudents = students.filter(
+                  (s) => s.studentID !== student.studentID
+                );
+                setStudents(updatedStudents);
+              })
+              .catch(() => {
+                errorNotification('Error', 'Failed to delete student');
+              });
+          }}
+        />
+      ),
     }
   ];
 
@@ -104,7 +129,7 @@ function App() {
             }}
             onFailure={(error) => {
               console.log(JSON.stringify(error));
-              errorNotification('Error', 'Cannot fetch students.');
+              errorNotification('Error', 'Email already taken');
             }}  
           />
           <Footer
