@@ -16,7 +16,7 @@ const checkStatus = response => {
 };
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080'
+  baseURL: 'http://localhost:9090'
 });
 
 export const getAllStudents = () => instance.get('/students').then(checkStatus);
